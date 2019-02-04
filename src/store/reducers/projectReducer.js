@@ -1,23 +1,20 @@
-import { CREATE_PROJECT } from '../actions/types'
+import { CREATE_PROJECT, CREATE_PROJECT_ERROR } from '../actions/types'
 
 const initState = {
-  projects: [
-    { id: '1', title: 'help', content: 'asdf asdf asdf asdf' },
-    { id: '2', title: 'go', content: 'asdf asdf asdf asdf' },
-    { id: '3', title: 'run', content: 'asdf asdf asdf asdf' },
-  ],
+  loading: false,
 }
 
 const projectReducer = (state = initState, action) => {
   switch (action.type) {
     case CREATE_PROJECT:
-      console.log('created project:', action.project)
-      break
+      return { ...state, loading: true }
 
-    // default:
-    //   state
+    case CREATE_PROJECT_ERROR:
+      return { ...state, loading: false }
+
+    default:
+      return state
   }
-  return state
 }
 
 export default projectReducer

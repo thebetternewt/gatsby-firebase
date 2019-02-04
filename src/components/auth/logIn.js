@@ -1,12 +1,30 @@
 import React from 'react'
 import { Formik } from 'formik'
+import { connect } from 'react-redux'
+import { logIn } from '../../store/actions/authActions'
+import Loader from '../loader'
 
-const LogIn = () => {
+const LogIn = props => {
+  const { loading, authError } = props
+  console.log(props)
+
+  if (loading) {
+    return (
+      <div className="container section project-details">
+        <div className="card z-depth-1">
+          <div className="card-content center">
+            <Loader />
+          </div>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="container">
       <Formik
         initialValues={{ email: '', password: '' }}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => props.logIn(values)}
       >
         {({ values, handleChange, handleBlur, handleSubmit }) => (
           <form onSubmit={handleSubmit} className="white">
@@ -38,6 +56,11 @@ const LogIn = () => {
             >
               Log In
             </button>
+            {authError && (
+              <div className="red-text center">
+                <p>{authError.message}</p>
+              </div>
+            )}
           </form>
         )}
       </Formik>
@@ -45,4 +68,12 @@ const LogIn = () => {
   )
 }
 
-export default LogIn
+const mapStateToProps = state => ({
+  loading: state.auth.loading,
+  authError: state.auth.error,
+})
+
+export default connect(
+  mapStateToProps,
+  { logIn }
+)(LogIn)

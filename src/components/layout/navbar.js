@@ -1,6 +1,8 @@
 import { Link } from 'gatsby'
 import PropTypes from 'prop-types'
 import React from 'react'
+import { connect } from 'react-redux'
+import { connectFirebase } from 'react-redux-firebase'
 
 import SignedInLinks from './signedInLinks'
 import SignedOutLinks from './signedOutLinks'
@@ -25,4 +27,9 @@ Header.defaultProps = {
   siteTitle: ``,
 }
 
-export default Header
+const mapStateToProps = state => {
+  console.log(state)
+  return {}
+}
+
+export default connect(mapStateToProps)(Header)

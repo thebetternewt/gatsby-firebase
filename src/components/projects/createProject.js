@@ -49,7 +49,6 @@ const CreateProject = props => {
 }
 
 const mapStateToProps = state => {
-  console.log('state to props state', state)
   return {
     project: state.project,
   }
